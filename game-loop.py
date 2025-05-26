@@ -13,7 +13,7 @@ pygame.display.set_caption("Snake") #screen name window
 
 #Step 4: I-set up ang bilis ng laro at Frame per Seconds
 clock = pygame.time.Clock() #controling speed of framerate
-FPS = 10 #frame per second
+FPS = 5 #frame per second
 
 #Step 5: mag handa ng mga kulay na gagamitin para sa laro
 WHITE = (255, 255, 255)
@@ -55,13 +55,13 @@ while running:
             
     #direksyon ng snake
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT and snake_dir != "RIGHT":
+            if event.key == pygame.K_a and snake_dir != "RIGHT":
                 snake_dir = "LEFT"
-            if event.key == pygame.K_RIGHT and snake_dir != "LEFT":
+            if event.key == pygame.K_d and snake_dir != "LEFT":
                 snake_dir = "RIGHT"
-            if event.key == pygame.K_UP and snake_dir != "DOWN":
+            if event.key == pygame.K_w and snake_dir != "DOWN":
                 snake_dir = "UP"
-            if event.key == pygame.K_DOWN and snake_dir != "UP":
+            if event.key == pygame.K_s and snake_dir != "UP":
                 snake_dir = "DOWN"
         
     #UPDATE GAME STATE
@@ -77,6 +77,11 @@ while running:
         head_y -= snake_block
     elif snake_dir == "DOWN":
         head_y += snake_block
+        
+    if score >= 5:
+        FPS = 10
+    if score >= 10:
+        FPS = 15
         
     #bagong ulo ng snake    
     new_head = [head_x, head_y]
