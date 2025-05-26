@@ -1,33 +1,38 @@
+#Step 1: Import muna ang mga library na kakailanganin
 import pygame
 import sys
 import random
 
-pygame.init() #initialization of pygame
+#Step 2: mag-initialize ng pygame
+pygame.init()
 
-#SCREEN SETUP
+#Step 3: mag set up ng window screen para sa laro
 WIDTH, HEIGHT = 800, 600 #screen height and width of window
 screen = pygame.display.set_mode((WIDTH, HEIGHT)) #screen window maker
 pygame.display.set_caption("Snake") #screen name window
 
+#Step 4: I-set up ang bilis ng laro at Frame per Seconds
 clock = pygame.time.Clock() #controling speed of framerate
 FPS = 10 #frame per second
 
-WHITE = (255, 255, 255) #colors
-GREEN = (0, 200, 0) #colors
-RED = (255, 0, 0) #colors
-BLACK = (0, 0, 0) #colors
+#Step 5: mag handa ng mga kulay na gagamitin para sa laro
+WHITE = (255, 255, 255)
+GREEN = (0, 200, 0)
+RED = (255, 0, 0)
+BLACK = (0, 0, 0)
 
+#Optional: Mag handa ng sounds kung gusto mo
 sounds = pygame.mixer.Sound("chomp-155392.mp3")
 
-#PLAYER SETUP
-snake_block = 20
+#Step 6: Mag-setup ng player depende sa gusto mo
+snake_block = 20 #kung gaano kalaki ang player(snake)
 snake_pos = [[100, 100]]
 snake_dir = "RIGHT"
 score = 0   
 
 #Snake Food
-food_x = random.randint(0, (WIDTH - snake_block) // snake_block) * snake_block
-food_y = random.randint(0, (HEIGHT - snake_block) // snake_block) * snake_block
+food_x = random.randint(0, (WIDTH - snake_block) // snake_block) * snake_block #random.randint(0, (800-20 / 20) = 0, 39)
+food_y = random.randint(0, (HEIGHT - snake_block) // snake_block) * snake_block #random.randint(0, (600 -20 / 20) = 0, 29)
 
 font = pygame.font.SysFont("Arial", 30)
 
@@ -37,13 +42,13 @@ def draw_snake(snake_body):
         
 def show_score():
     score_text = font.render(f"Score: {score}", True, BLACK)
-    screen.blit(score_text, (10, 10))
+    screen.blit(score_text, (360, 10))
 
 #GAME LOOP
 running = True
 while running:
     
-    #Step 1: Handle Input
+    #HANDLE INPUT
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -59,9 +64,11 @@ while running:
             if event.key == pygame.K_DOWN and snake_dir != "UP":
                 snake_dir = "DOWN"
         
-    #Step 2: Update Game State 
+    #UPDATE GAME STATE
     #galaw ng snake
-    head_x, head_y =  snake_pos[0]
+    head_x = snake_pos[0][0]
+    head_y = snake_pos[0][1]
+    
     if snake_dir == "LEFT":
         head_x -= snake_block
     elif snake_dir == "RIGHT":
@@ -80,8 +87,8 @@ while running:
         score += 1
         sounds.play()
         
-        food_x = random.randint(0, (WIDTH - snake_block) // snake_block) * snake_block
-        food_y = random.randint(0, (HEIGHT - snake_block) // snake_block) * snake_block
+        food_x = random.randint(0, (WIDTH - snake_block) // snake_block) * snake_block #random.randint(0, (800-20 / 20) = 0, 39)
+        food_y = random.randint(0, (HEIGHT - snake_block) // snake_block) * snake_block #random.randint(0, (600 -20 / 20) = 0, 29)
     
     else:
         snake_pos.pop()
