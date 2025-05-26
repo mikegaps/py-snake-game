@@ -1,0 +1,85 @@
+import pygame
+import sys
+
+pygame.init()
+
+#Screen setup
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Sprite")
+
+#FPS
+clock = pygame.time.Clock()
+FPS = 60
+
+#Color
+WHITE = (255, 255, 255)
+
+#Sprite
+walk_frames = [
+    pygame.image.load("walking-sprite/1.png").convert_alpha(),
+    pygame.image.load("walking-sprite/2.png").convert_alpha(),
+    pygame.image.load("walking-sprite/3.png").convert_alpha(),
+    pygame.image.load("walking-sprite/4.png").convert_alpha(),
+    pygame.image.load("walking-sprite/5.png").convert_alpha(),
+    pygame.image.load("walking-sprite/6.png").convert_alpha()
+]
+
+frame_index = 0
+animation_speed = 0.15
+move_speed = 3
+jump = 3
+x, y = 0, 250
+direction = any
+
+
+running = True
+
+while running:
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+            
+    screen.fill(WHITE)
+    
+    #Handle input
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_RIGHT:
+            direction = "RIGHT"
+        elif event.key == pygame.K_LEFT:
+            direction = "LEFT"
+        elif event.key == pygame.K_UP:
+            direction = "UP"
+        elif event.key == pygame.K_DOWN:
+            direction = "DOWN"
+                
+    #Update 
+    if direction == "RIGHT":
+        x += x
+    elif direction == "LEFT":
+        x -= x
+    elif direction == "UP":
+        y -= jump
+    elif direction == "DOWN":
+        y += jump
+    
+       
+    frame_index += animation_speed
+    if frame_index >= len(walk_frames):
+        frame_index = 0
+        
+    if x > 800:
+        x = 0
+    elif x < 0:
+        x = 750
+        
+        
+    current_frame = pygame.transform.scale(walk_frames[int(frame_index)], (100, 100))
+    screen.blit(current_frame, (x, y))
+    
+    pygame.display.flip()
+    clock.tick(FPS)
+    
+pygame.quit()
+sys.exit()
