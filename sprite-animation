@@ -49,16 +49,16 @@ while running:
             direction = "RIGHT"
         elif event.key == pygame.K_LEFT:
             direction = "LEFT"
-        elif event.key == pygame.K_UP:
+        elif event.key == pygame.K_UP:  
             direction = "UP"
         elif event.key == pygame.K_DOWN:
             direction = "DOWN"
                 
     #Update 
     if direction == "RIGHT":
-        x += x
+        x += move_speed
     elif direction == "LEFT":
-        x -= x
+        x -= move_speed
     elif direction == "UP":
         y -= jump
     elif direction == "DOWN":
